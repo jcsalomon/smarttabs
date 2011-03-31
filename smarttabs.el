@@ -49,8 +49,30 @@
       (t
        ad-do-it))))
 
+;; C/C++
 (smart-tabs-advice c-indent-line c-basic-offset)
 (smart-tabs-advice c-indent-region c-basic-offset)
+
+;; JavaScript
+(smart-tabs-advice js2-indent-line js2-basic-offset)
+
+;; Perl
+(smart-tabs-advice cperl-indent-line cperl-indent-level)
+
+;; Python
+(smart-tabs-advice python-indent-line-1 python-indent)
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)
+			(setq tab-width (default-value 'tab-width))))
+
+;; Ruby
+(smart-tabs-advice ruby-indent-line ruby-indent-level)
+(setq ruby-indent-tabs-mode t)
+
+;; VHDL
+(smart-tabs-advice vhdl-indent-line vhdl-basic-offset)
+(setq vhdl-indent-tabs-mode t)
 
 
 (provide 'smarttabs)
