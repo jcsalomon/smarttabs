@@ -62,7 +62,6 @@
 (smart-tabs-advice cperl-indent-line cperl-indent-level)
 
 ;; Python
-;; Python
 (smart-tabs-advice python-indent-line-1 python-indent)
 (add-hook 'python-mode-hook
           (lambda ()
