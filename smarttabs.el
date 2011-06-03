@@ -49,6 +49,15 @@
       (t
        ad-do-it))))
 
+(defun smart-tabs-set-indent-automatically ()
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (if (search-forward "\t" nil t)
+        (progn (setq indent-tabs-mode t)
+               (message "Tabs found; indent-tabs-mode is automatically turned on."))
+	  (message "tab not found"))))
+
 (smart-tabs-advice c-indent-line c-basic-offset)
 (smart-tabs-advice c-indent-region c-basic-offset)
 
