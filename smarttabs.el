@@ -13,7 +13,10 @@
 ;; Modifications by John Croisant:
 ;;  * Remembers and re-applies window start, so that indenting doesn't
 ;;    cause the window to visibly scroll. (2009-09-18)
-;; 
+;; Modifications by Julien Fontanet:
+;;  * Apply to languages other than C/C++. (2011-03-31)
+;; Modifications by Tomy Kaira
+;;  * Add smart-tabs-set-indent-automatically. (2011-06-03)
 
 
 (defadvice align (around smart-tabs activate)
@@ -53,8 +56,40 @@
         (t
          ad-do-it)))))
 
+
+(defun smart-tabs-set-indent-automatically ()
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (if (search-forward "\t" nil t)
+        (progn (setq indent-tabs-mode t)
+               (message "Tabs found; indent-tabs-mode is automatically turned on."))
+                        (message "tab not found"))))
+
+
+;; C/C++
 (smart-tabs-advice c-indent-line c-basic-offset)
 (smart-tabs-advice c-indent-region c-basic-offset)
+
+;; Javascript
+(smart-tabs-advice js2-indent-line js2-basic-offset)
+
+;; Perl
+(smart-tabs-advice cperl-indent-line cperl-indent-level)
+
+;; Python
+(smart-tabs-advice python-indent-line-1 python-indent)
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)
+            (setq tab-width (default-value 'tab-width))))
+;; Ruby
+(smart-tabs-advice ruby-indent-line ruby-indent-level)
+(setq ruby-indent-tabs-mode t)
+
+;; VHDL
+(smart-tabs-advice vhdl-indent-line vhdl-basic-offset)
+(setq vhdl-indent-tabs-mode t)
 
 
 (provide 'smarttabs)
