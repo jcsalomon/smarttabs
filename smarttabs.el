@@ -55,6 +55,6 @@
 
 (smart-tabs-advice c-indent-line c-basic-offset)
 (smart-tabs-advice c-indent-region c-basic-offset)
-
+(smart-tabs-advice js-indent-line js-indent-level)
 
 (provide 'smarttabs)
