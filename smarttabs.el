@@ -15,7 +15,7 @@
 ;;    cause the window to visibly scroll. (2009-09-18)
 ;; 
 
-
+(setq-default tab-width 4)
 (defadvice align (around smart-tabs activate)
   (let ((indent-tabs-mode nil)) ad-do-it))
 
