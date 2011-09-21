@@ -12,6 +12,9 @@
 ;; Modifications by John Croisant:
 ;;  * Remembers and re-applies window start, so that indenting doesn't
 ;;    cause the window to visibly scroll. (2009-09-18)
+;;  * Reverted the above. The original problem seems to be gone, and
+;;    my change causes a bug when newline-and-indent is used on the
+;;    bottom line visible in the window. (2011-09-21)
 ;;
 ;; Modifications by Julien Fontanet:
 ;;  * Apply to languages other than C/C++. (2011-03-31)
@@ -49,11 +52,9 @@
              (replace-match "" nil nil nil 1)))
          (setq tab-width tab-width)
          (let ((tab-width fill-column)
-               (,offset fill-column)
-               (wstart (window-start)))
+               (,offset fill-column))
            (unwind-protect
-               (progn ad-do-it)
-             (set-window-start (selected-window) wstart))))
+               (progn ad-do-it))))
         (t
          ad-do-it)))))
 
