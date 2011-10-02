@@ -1,10 +1,13 @@
 ;; Emacs smart tabs mode
 ;;   Intelligently indent with tabs, align with spaces!
 ;;
-;; To use: save as smart-tabs-mode.el in your .emacs.d directory, and
-;; add the following to your .emacs file:
+;; To use, save both smattabs.el and smart-tabs-mode.el to your .emacs.d
+;; directory, and add the following lines to your .emacs file:
 ;;
+;;  (require 'smarttabs)
 ;;  (autoload 'smart-tabs-mode "smart-tabs-mode" nil t)
+;;
+;; (The first line may already exist if you've been using smart tabs.)
 ;;
 ;; Then, for each language you want to use smart tabs, set up a hook
 ;; and advice like so:
