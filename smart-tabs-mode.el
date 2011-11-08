@@ -54,6 +54,7 @@
 ;; Modifications by Tomita Hiroshi:
 ;;  * Set indent-tabs-mode automatically for files with tabs. (2011-06-03)
 
+(require 'advice)
 
 (defmacro smart-tabs-mode/no-tabs-mode-advice (function)
   `(unless (ad-find-advice ',function 'around 'smart-tabs)
