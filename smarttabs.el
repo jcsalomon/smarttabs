@@ -4,23 +4,15 @@
 ;; Note: Indenting only uses tabs when indent-tabs-mode is non-nil,
 ;; otherwise it uses spaces as usual.
 ;;
-;; To use: save as smarttabs.el in your .emacs.d directory, and add
+;; To use: save as smarttabs.el to a directory on your load-path
+;; (in ~/.emacs.d/elisp, for example), then add the line
 ;; "(require 'smarttabs)" to your .emacs file.
 ;;
 ;; Code is GPLv2, derived from http://www.emacswiki.org/emacs/SmartTabs
+;; as modified by John Croisant (jacius), along with Julien Fontanet and
+;; Tomita Hiroshi (tomykaira).
 ;;
-;; Modifications by John Croisant:
-;;  * Remembers and re-applies window start, so that indenting doesn't
-;;    cause the window to visibly scroll. (2009-09-18)
-;;  * Reverted the above. The original problem seems to be gone, and
-;;    my change causes a bug when newline-and-indent is used on the
-;;    bottom line visible in the window. (2011-09-21)
-;;
-;; Modifications by Julien Fontanet:
-;;  * Apply to languages other than C/C++. (2011-03-31)
-;;
-;; Modifications by Tomita Hiroshi:
-;;  * Set indent-tabs-mode automatically for files with tabs. (2011-06-03)
+;; Modification history is at <https://github.com/jcsalomon/smarttabs>.
 
 
 (defadvice align (around smart-tabs activate)
