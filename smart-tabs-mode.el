@@ -52,7 +52,7 @@
            (let ((indent-tabs-mode nil)) ad-do-it)
          ad-do-it))))
 
-
+;;;###autoload
 (define-minor-mode smart-tabs-mode
   "Intelligently indent with tabs, align with spaces!"
 
@@ -74,11 +74,12 @@
           ad-do-it)))
     ))
 
+;;;###autoload
 (defun smart-tabs-mode-enable ()
   "Enable smart-tabs-mode."
   (smart-tabs-mode t))
 
-
+;;;###autoload
 (defmacro smart-tabs-advice (function offset)
   `(progn
      (defvaralias ',offset 'tab-width)
