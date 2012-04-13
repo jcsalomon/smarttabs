@@ -15,6 +15,18 @@
 ;;  (add-hook 'MODE-HOOK 'smart-tabs-mode-enable)
 ;;  (smart-tabs-advice INDENT-FUNC TAB-WIDTH-VAR)
 ;;
+;; Note that it might be preferable to delay calling smart-tabs-advice
+;; until after the major mode is loaded and evaluated:
+;;
+;; (eval-after-load 'MODE-FEATURE
+;;   '(smart-tabs-advice INDENT-FUNC TAB-WIDTH-VAR))
+;;
+;; Or:
+;;
+;;  (add-hook 'MODE-HOOK (lambda ()
+;;                         (smart-tabs-mode-enable)
+;;                         (smart-tabs-advice INDENT-FUNC TAB-WIDTH-VAR)))
+;;
 ;; Here are some specific examples for a few popular languages:
 ;;
 ;;  ;; C/C++
