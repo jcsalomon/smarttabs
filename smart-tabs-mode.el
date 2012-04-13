@@ -4,7 +4,10 @@
 ;; To use, save smart-tabs-mode.el to a a directory on your load-path
 ;; (e.g., ~/.emacs.d/elisp), then add the following to your .emacs file:
 ;;
-;;  (require 'smart-tabs-mode)
+;;  (autoload 'smart-tabs-mode "smart-tabs-mode"
+;;    "Intelligently indent with tabs, align with spaces!")
+;;  (autoload 'smart-tabs-mode-enable "smart-tabs-mode")
+;;  (autoload 'smart-tabs-advice "smart-tabs-mode")
 ;;
 ;; Then, for each language you want to use smart tabs, set up a hook
 ;; and advice like so:
