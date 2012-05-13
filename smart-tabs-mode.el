@@ -4,13 +4,28 @@
 ;; To use, save smart-tabs-mode.el to a a directory on your load-path
 ;; (e.g., ~/.emacs.d/elisp), then add the following to your .emacs file:
 ;;
-;;  (require 'smart-tabs-mode)
+;;  (autoload 'smart-tabs-mode "smart-tabs-mode"
+;;    "Intelligently indent with tabs, align with spaces!")
+;;  (autoload 'smart-tabs-mode-enable "smart-tabs-mode")
+;;  (autoload 'smart-tabs-advice "smart-tabs-mode")
 ;;
 ;; Then, for each language you want to use smart tabs, set up a hook
 ;; and advice like so:
 ;;
 ;;  (add-hook 'MODE-HOOK 'smart-tabs-mode-enable)
 ;;  (smart-tabs-advice INDENT-FUNC TAB-WIDTH-VAR)
+;;
+;; Note that it might be preferable to delay calling smart-tabs-advice
+;; until after the major mode is loaded and evaluated:
+;;
+;; (eval-after-load 'MODE-FEATURE
+;;   '(smart-tabs-advice INDENT-FUNC TAB-WIDTH-VAR))
+;;
+;; Or:
+;;
+;;  (add-hook 'MODE-HOOK (lambda ()
+;;                         (smart-tabs-mode-enable)
+;;                         (smart-tabs-advice INDENT-FUNC TAB-WIDTH-VAR)))
 ;;
 ;; Here are some specific examples for a few popular languages:
 ;;
@@ -52,7 +67,7 @@
            (let ((indent-tabs-mode nil)) ad-do-it)
          ad-do-it))))
 
-
+;;;###autoload
 (define-minor-mode smart-tabs-mode
   "Intelligently indent with tabs, align with spaces!"
 
@@ -74,11 +89,12 @@
           ad-do-it)))
     ))
 
+;;;###autoload
 (defun smart-tabs-mode-enable ()
   "Enable smart-tabs-mode."
   (smart-tabs-mode t))
 
-
+;;;###autoload
 (defmacro smart-tabs-advice (function offset)
   `(progn
      (defvaralias ',offset 'tab-width)
