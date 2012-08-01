@@ -1,5 +1,32 @@
-;; Emacs smart tabs mode
-;;   Intelligently indent with tabs, align with spaces!
+;;; smart-tabs-mode.el --- Intelligently indent with tabs, align with spaces!
+
+;; Copyright © 2011 John Croisant <jacius@gmail.com>
+;; Copyright © 2011 Joel C. Salomon <joelcsalomon@gmail.com>
+;; Copyright © 2012 Alan Pearce <alan@alanpearce.co.uk>
+
+;; Author: John Croisant <jacius@gmail.com>
+;;         Joel C. Salomon <joelcsalomon@gmail.com>
+;;         Alan Pearce <alan@alanpearce.co.uk>
+;; Created: 19 Sep 2011
+;; Version: 0.1
+;; Keywords: languages
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 2 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
 ;;
 ;; To use, save smart-tabs-mode.el to a a directory on your load-path
 ;; (e.g., ~/.emacs.d/elisp), then add the following to your .emacs file:
@@ -50,14 +77,14 @@
 ;;  (add-hook 'ruby-mode-hook 'smart-tabs-mode-enable)
 ;;  (smart-tabs-advice ruby-indent-line ruby-indent-level)
 ;;
-;;
-;; smart-tabs-mode.el is licensed under the GPLv2.
 ;; It is derived from <http://www.emacswiki.org/emacs/SmartTabs>
 ;; as modified by John Croisant (jacius), along with Julien Fontanet and
 ;; Tomita Hiroshi (tomykaira).
 ;;
 ;; Modification history is at <https://github.com/jcsalomon/smarttabs>.
 
+;;;; Code:
+
 (require 'advice)
 
 (defmacro smart-tabs-mode/no-tabs-mode-advice (function)
@@ -116,3 +143,5 @@
 
 
 (provide 'smart-tabs-mode)
+
+;;; smart-tabs-mode.el ends here
