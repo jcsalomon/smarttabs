@@ -77,7 +77,7 @@
 ;;  (add-hook 'ruby-mode-hook 'smart-tabs-mode-enable)
 ;;  (smart-tabs-advice ruby-indent-line ruby-indent-level)
 ;;
-;; It is derived from <http://www.emacswiki.org/emacs/SmartTabs>
+;; This package is derived from <http://www.emacswiki.org/emacs/SmartTabs>
 ;; as modified by John Croisant (jacius), along with Julien Fontanet and
 ;; Tomita Hiroshi (tomykaira).
 ;;
