@@ -7,11 +7,14 @@
 ;; Author: John Croisant <jacius@gmail.com>
 ;;         Joel C. Salomon <joelcsalomon@gmail.com>
 ;;         Alan Pearce <alan@alanpearce.co.uk>
+;; URL: http://www.emacswiki.org/emacs/SmartTabs
 ;; Created: 19 Sep 2011
 ;; Version: 0.1
 ;; Keywords: languages
 
 ;; This file is not part of GNU Emacs.
+
+;;; License:
 
 ;; This file is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -27,7 +30,12 @@
 ;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;;
+
+;; This package provide a semantic way of using tab characters in
+;; source code: tabs for indentation, spaces for alignment.
+
+;;; Installation:
+
 ;; To use, save smart-tabs-mode.el to a a directory on your load-path
 ;; (e.g., ~/.emacs.d/elisp), then add the following to your .emacs file:
 ;;
@@ -83,7 +91,7 @@
 ;;
 ;; Modification history is at <https://github.com/jcsalomon/smarttabs>.
 
-;;;; Code:
+;;; Code:
 
 (require 'advice)
 
