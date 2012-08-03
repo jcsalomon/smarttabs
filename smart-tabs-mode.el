@@ -7,6 +7,7 @@
 ;; Author: John Croisant <jacius@gmail.com>
 ;;         Joel C. Salomon <joelcsalomon@gmail.com>
 ;;         Alan Pearce <alan@alanpearce.co.uk>
+;; URL: http://www.emacswiki.org/emacs/SmartTabs
 ;; Created: 19 Sep 2011
 ;; Version: 0.1
 ;; Keywords: languages
