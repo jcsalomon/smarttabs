@@ -29,7 +29,12 @@
 ;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;;
+
+;; This package provide a semantic way of using tab characters in
+;; source code: tabs for indentation, spaces for alignment.
+
+;;; Installation:
+
 ;; To use, save smart-tabs-mode.el to a a directory on your load-path
 ;; (e.g., ~/.emacs.d/elisp), then add the following to your .emacs file:
 ;;
