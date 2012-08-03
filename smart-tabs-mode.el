@@ -83,7 +83,7 @@
 ;;
 ;; Modification history is at <https://github.com/jcsalomon/smarttabs>.
 
-;;;; Code:
+;;; Code:
 
 (require 'advice)
 
