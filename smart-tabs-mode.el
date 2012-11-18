@@ -3,13 +3,15 @@
 ;; Copyright © 2011 John Croisant <jacius@gmail.com>
 ;; Copyright © 2011 Joel C. Salomon <joelcsalomon@gmail.com>
 ;; Copyright © 2012 Alan Pearce <alan@alanpearce.co.uk>
+;; Copyright © 2012 Daniel Dehennin <daniel.dehennin@baby-gnu.org>
 
 ;; Author: John Croisant <jacius@gmail.com>
 ;;         Joel C. Salomon <joelcsalomon@gmail.com>
 ;;         Alan Pearce <alan@alanpearce.co.uk>
+;;         Daniel Dehennin <daniel.dehennin@baby-gnu.org>
 ;; URL: http://www.emacswiki.org/emacs/SmartTabs
 ;; Created: 19 Sep 2011
-;; Version: 0.1
+;; Version: 0.2
 ;; Keywords: languages
 
 ;; This file is not part of GNU Emacs.
@@ -62,7 +64,11 @@
 ;;                         (smart-tabs-mode-enable)
 ;;                         (smart-tabs-advice INDENT-FUNC TAB-WIDTH-VAR)))
 ;;
-;; Here are some specific examples for a few popular languages:
+;; Here are some specific examples for a few popular languages which
+;; can be enabled by 'smart-tab-insinuate':
+;;
+;;  ;; Load all the following in one pass
+;;  (smart-tabs-insinuate 'c 'javascript 'cperl 'python 'ruby)
 ;;
 ;;  ;; C/C++
 ;;  (add-hook 'c-mode-hook 'smart-tabs-mode-enable)
@@ -97,6 +103,42 @@
 
 (defvar smart-tabs-mode nil
   "Define if smart-tabs-mode is enable")
+
+(defvar smart-tabs-mode-map
+  '((c . (lambda ()
+	   (add-hook 'c-mode-hook
+		     (lambda () 
+		       (smart-tabs-mode-enable)
+		       (smart-tabs-advice c-indent-line c-basic-offset)
+		       (smart-tabs-advice c-indent-region c-basic-offset)))))
+    (javascript . (lambda ()
+		    (add-hook 'js2-mode-hook
+			      (lambda ()
+				(smart-tabs-mode-enable)
+				(smart-tabs-advice js2indent-indent-line js2-basic-offset)))))
+    (cperl . (lambda ()
+	       (add-hook 'cperl-mode-hook
+			 (lambda ()
+			   (smart-tabs-mode-enable)
+			   (smart-tabs-advice cperl-indent-line cperl-indent-level)))))
+    (python . (lambda ()
+		(add-hook 'python-mode-hook
+			  (lambda () 
+			    (smart-tabs-mode-enable)
+			    (smart-tabs-advice python-indent-line-1 python-indent)
+			    (if (featurep 'python-mode)
+				(progn
+				  (smart-tabs-advice py-indent-line py-indent-offset)
+				  (smart-tabs-advice py-newline-and-indent py-indent-offset)
+				  (smart-tabs-advice py-indent-region py-indent-offset)))))))
+    (ruby . (lambda ()
+	      (add-hook 'ruby-mode-hook
+			(lambda ()
+			  (smart-tabs-mode-enable)
+			  (smart-tabs-advice ruby-indent-line ruby-indent-level)))))
+    )
+  "Alist of language name and their activation code.
+Smarttabs is enabled in mode hook.")
 
 (defmacro smart-tabs-mode/no-tabs-mode-advice (function)
   `(unless (ad-find-advice ',function 'around 'smart-tabs)
@@ -152,6 +194,18 @@
         (t
          ad-do-it)))))
 
+;;;###autoload
+(defun smart-tabs-insinuate (&rest languages)
+  "Enable smart-tabs-mode for LANGUAGES.
+LANGUAGES is a list of SYMBOL or NAME as defined in
+'smart-tabs-mode-map' alist.
+"
+  (mapc `(lambda (lang)
+	   (let ((langdef (assoc lang smart-tabs-mode-map)))
+	     (if (null langdef)
+		 (error (format "Unknown smart-tab-mode capable language '%s'" lang)))
+	     (funcall (cdr langdef))))
+	languages))
 
 (provide 'smart-tabs-mode)
 
