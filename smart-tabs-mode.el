@@ -101,6 +101,9 @@
 
 (require 'advice)
 
+(defvar smart-tabs-mode nil
+  "Define if smart-tabs-mode is enabled")
+
 (defvar smart-tabs-mode-map
   '((c . (lambda ()
            (add-hook 'c-mode-hook
