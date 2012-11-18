@@ -95,6 +95,9 @@
 
 (require 'advice)
 
+(defvar smart-tabs-mode nil
+  "Define if smart-tabs-mode is enable")
+
 (defmacro smart-tabs-mode/no-tabs-mode-advice (function)
   `(unless (ad-find-advice ',function 'around 'smart-tabs)
      (defadvice ,function (around smart-tabs activate)
