@@ -104,7 +104,7 @@
 (defvar smart-tabs-mode nil
   "Define if smart-tabs-mode is enabled")
 
-(defvar smart-tabs-mode-map
+(defvar smart-tabs-insinuate-alist
   '((c . (lambda ()
            (add-hook 'c-mode-hook
                      (lambda ()
@@ -203,11 +203,11 @@ Smarttabs is enabled in mode hook.")
 (defun smart-tabs-insinuate (&rest languages)
   "Enable smart-tabs-mode for LANGUAGES.
 LANGUAGES is a list of SYMBOL or NAME as defined in
-'smart-tabs-mode-map' alist or a language using standard named
+'smart-tabs-insinuate-alist' alist or a language using standard named
 indent function and indent level.
 "
   (mapc (lambda (lang)
-           (let ((lang-map (assoc lang smart-tabs-mode-map))
+           (let ((lang-map (assoc lang smart-tabs-insinuate-alist))
                  (lang-param (smart-tabs-get-standard-language lang)))
              (cond ((and (null lang-map)
                          (not (null (car lang-param)))
