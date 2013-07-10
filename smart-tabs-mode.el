@@ -182,7 +182,6 @@ Smarttabs is enabled in mode hook.")
 ;;;###autoload
 (defmacro smart-tabs-advice (function offset)
   `(progn
-     (defvaralias ',offset 'tab-width)
      (defadvice ,function (around smart-tabs activate)
        (cond
         (smart-tabs-mode
