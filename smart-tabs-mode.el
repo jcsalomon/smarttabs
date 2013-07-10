@@ -100,6 +100,7 @@
 ;;; Code:
 
 (require 'advice)
+(require 'cl-lib)
 
 (defvar smart-tabs-mode nil
   "Define if smart-tabs-mode is enabled")
@@ -115,8 +116,8 @@
 
 ;;;###autoload
 (defmacro smart-tabs-create-advice-list (advice-list)
-  `(loop for (func . offset) in ,advice-list
-         collect `(smart-tabs-advice ,func ,offset)))
+  `(cl-loop for (func . offset) in ,advice-list
+            collect `(smart-tabs-advice ,func ,offset)))
 
 
 ;;;###autoload
