@@ -100,50 +100,73 @@
 ;;; Code:
 
 (require 'advice)
+(require 'cl-lib)
 
 (defvar smart-tabs-mode nil
   "Define if smart-tabs-mode is enabled")
 
-(defvar smart-tabs-insinuate-alist
-  '((c . (lambda ()
-           (add-hook 'c-mode-hook
-                     (lambda ()
-                       (smart-tabs-mode-enable)
-                       (smart-tabs-advice c-indent-line c-basic-offset)
-                       (smart-tabs-advice c-indent-region c-basic-offset)))))
-    (javascript . (lambda ()
-                    (add-hook 'js2-mode-hook
-                              (lambda ()
-                                (smart-tabs-mode-enable)
-                                (smart-tabs-advice js2-indent-line js2-basic-offset)))))
-    (cperl . (lambda ()
-               (add-hook 'cperl-mode-hook
+
+;;;###autoload
+(defmacro smart-tabs-when (condition advice-list)
+  `(when ,condition
+     ,@(smart-tabs-create-advice-list advice-list)))
+
+(put 'smart-tabs-when 'lisp-indent-function 1)
+
+
+;;;###autoload
+(defmacro smart-tabs-create-advice-list (advice-list)
+  `(cl-loop for (func . offset) in ,advice-list
+            collect `(smart-tabs-advice ,func ,offset)))
+
+
+;;;###autoload
+(defmacro smart-tabs-create-language-advice (lang mode-hook advice-list &rest body)
+  "Create a cons cell containing the actions to take to enable
+`smart-tabs-mode' for the language LANG. This usually involved enabling
+`smart-tabs-mode' through `smart-tabs-mode-enable' and adding a lambda
+function to the MODE-HOOK for the specified language. This macro
+simplifies the creation of such a cons cell."
+  `'(,lang . (lambda ()
+               (add-hook ',mode-hook
                          (lambda ()
                            (smart-tabs-mode-enable)
-                           (smart-tabs-advice cperl-indent-line cperl-indent-level)))))
-    (python . (lambda ()
-                (add-hook 'python-mode-hook
-                          (lambda ()
-                            (smart-tabs-mode-enable)
-                            (smart-tabs-advice python-indent-line-1 python-indent)
-                            (if (featurep 'python-mode)
-                                (progn
-                                  (smart-tabs-advice py-indent-line py-indent-offset)
-                                  (smart-tabs-advice py-newline-and-indent py-indent-offset)
-                                  (smart-tabs-advice py-indent-region py-indent-offset)))))))
-    (ruby . (lambda ()
-              (add-hook 'ruby-mode-hook
-                        (lambda ()
-                          (smart-tabs-mode-enable)
-                          (smart-tabs-advice ruby-indent-line ruby-indent-level)))))
-    (nxml . (lambda ()
-              (add-hook 'nxml-mode-hook
-                        (lambda ()
-                          (smart-tabs-mode-enable)
-                          (smart-tabs-advice nxml-indent-line nxml-child-indent)))))
-    )
+                           ,@(smart-tabs-create-advice-list advice-list)
+                           ,@(cl-loop for form in body
+                                      collect (macroexpand form)))))))
+
+(put 'smart-tabs-create-language-advice 'lisp-indent-function 2)
+
+
+
+(defvar smart-tabs-insinuate-alist
+  `(,(smart-tabs-create-language-advice c c-mode-hook
+       ((c-indent-line . c-basic-offset)
+        (c-indent-region . c-basic-offset)))
+
+    ,(smart-tabs-create-language-advice javascript js2-mode-hook
+       ((js2-indent-line . js2-basic-offset)))
+
+    ,(smart-tabs-create-language-advice cperl cperl-mode-hook
+       ((cperl-indent-line . cperl-indent-level)))
+
+    ,(smart-tabs-create-language-advice python python-mode-hook
+       ((python-indent-line-1 . python-indent))
+       (smart-tabs-when (featurep 'python-mode)
+         ((py-indent-line . py-indent-offset)
+          (py-newline-and-indent . py-indent-offset)
+          (py-indent-region . py-indent-offset))))
+
+    ,(smart-tabs-create-language-advice ruby ruby-mode-hook
+       ((ruby-indent-line . ruby-indent-level)))
+
+    ,(smart-tabs-create-language-advice nxml nxml-mode-hook
+       ((nxml-indent-line . nxml-child-indent))))
+
   "Alist of language name and their activation code.
 Smarttabs is enabled in mode hook.")
+
+
 
 (defmacro smart-tabs-mode/no-tabs-mode-advice (function)
   `(unless (ad-find-advice ',function 'around 'smart-tabs)
@@ -206,15 +229,16 @@ LANGUAGES is a list of SYMBOL or NAME as defined in
 indent function and indent level.
 "
   (mapc (lambda (lang)
-           (let ((lang-map (assoc lang smart-tabs-insinuate-alist))
-                 (lang-param (smart-tabs-get-standard-language lang)))
-             (cond ((and (null lang-map)
-                         (not (null (car lang-param)))
-                         (not (null (nth 1 lang-param)))
-                         (not (null (nth 2 lang-param))))
-                    (smart-tabs-guess-insinuate lang-param))
-                   ((null lang-map) (error (format "Unknown smart-tab-mode capable language '%s'" lang)))
-                   (t (funcall (cdr lang-map))))))
+          (let ((lang-map (assoc lang smart-tabs-insinuate-alist))
+                (lang-param (smart-tabs-get-standard-language lang)))
+            (cond ((and (null lang-map)
+                        (not (null (car lang-param)))
+                        (not (null (nth 1 lang-param)))
+                        (not (null (nth 2 lang-param))))
+                   (smart-tabs-guess-insinuate lang-param))
+                  ((null lang-map)
+                   (error (format "Unknown smart-tab-mode capable language '%s'" lang)))
+                  (t (funcall (cdr lang-map))))))
         languages))
 
 (defun smart-tabs-guess-insinuate (lang-param)
@@ -226,15 +250,15 @@ thoses are defined, we use them."
   (let ((lang-hook (car lang-param))
         (indent-function (nth 1 lang-param))
         (indent-level (nth 2 lang-param)))
-  (if (and (not (null lang-hook))
-           (and (not (null indent-function))
-                (fboundp indent-function))
-           (and (not (null indent-level))
-                (boundp indent-level)))
-      (add-hook lang-hook
-                `(lambda ()
-                    (smart-tabs-mode-enable)
-                    (smart-tabs-advice ,indent-function ,indent-level))))))
+    (if (and (not (null lang-hook))
+             (and (not (null indent-function))
+                  (fboundp indent-function))
+             (and (not (null indent-level))
+                  (boundp indent-level)))
+        (add-hook lang-hook
+                  `(lambda ()
+                     (smart-tabs-mode-enable)
+                     (smart-tabs-advice ,indent-function ,indent-level))))))
 
 (defun smart-tabs-get-standard-language (language)
   "Return a list of HOOK INDENT-FUNCTION INDENT-LEVEL for a language."
