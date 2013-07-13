@@ -141,6 +141,14 @@ simplifies the creation of such a cons cell."
        ((c-indent-line . c-basic-offset)
         (c-indent-region . c-basic-offset)))
 
+    ,(smart-tabs-create-language-advice c++ c++-mode-hook
+       ((c-indent-line . c-basic-offset)
+        (c-indent-region . c-basic-offset)))
+
+    ,(smart-tabs-create-language-advice java java-mode-hook
+       ((c-indent-line . c-basic-offset)
+        (c-indent-region . c-basic-offset)))
+
     ,(smart-tabs-create-language-advice javascript js2-mode-hook
        ((js2-indent-line . js2-basic-offset)))
 
