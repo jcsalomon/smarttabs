@@ -218,7 +218,7 @@ indent function and indent level.
 
 
 ;;;###autoload
-(defun smart-tabs-add-language-support (lang mode-hook advice-list &rest body)
+(defmacro smart-tabs-add-language-support (lang mode-hook advice-list &rest body)
   "Add support for a language not already in the `smart-tabs-insinuate-alist'."
   (declare (indent 2))
   `(add-to-list
