@@ -246,6 +246,17 @@ indent function and indent level.
                   (t (funcall (cdr lang-map))))))
         languages))
 
+
+;;;###autoload
+(defmacro smart-tabs-add-language-support (lang mode-hook advice-list &rest body)
+  "Add support for a language not already in the `smart-tabs-insinuate-alist'."
+  (declare (indent 2))
+  `(add-to-list
+    'smart-tabs-insinuate-alist
+    (smart-tabs-create-language-advice ,lang ,mode-hook
+      ,advice-list ,@body)))
+
+
 (defun smart-tabs-guess-insinuate (lang-param)
   "Enable smart-tabs-mode if language respect standard naming.
 Several languages define a '<LANGUAGE>-indent-line' function and
