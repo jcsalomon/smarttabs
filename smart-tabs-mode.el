@@ -108,10 +108,9 @@
 
 ;;;###autoload
 (defmacro smart-tabs-when (condition advice-list)
+  (declare (indent 1))
   `(when ,condition
      ,@(smart-tabs-create-advice-list advice-list)))
-
-(put 'smart-tabs-when 'lisp-indent-function 1)
 
 
 ;;;###autoload
@@ -127,6 +126,7 @@
 `smart-tabs-mode' through `smart-tabs-mode-enable' and adding a lambda
 function to the MODE-HOOK for the specified language. This macro
 simplifies the creation of such a cons cell."
+  (declare (indent 2))
   `'(,lang . (lambda ()
                (add-hook ',mode-hook
                          (lambda ()
@@ -134,9 +134,6 @@ simplifies the creation of such a cons cell."
                            ,@(smart-tabs-create-advice-list advice-list)
                            ,@(cl-loop for form in body
                                       collect (macroexpand form)))))))
-
-(put 'smart-tabs-create-language-advice 'lisp-indent-function 2)
-
 
 
 (defvar smart-tabs-insinuate-alist
