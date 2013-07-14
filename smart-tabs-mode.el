@@ -4,14 +4,16 @@
 ;; Copyright © 2011 Joel C. Salomon <joelcsalomon@gmail.com>
 ;; Copyright © 2012 Alan Pearce <alan@alanpearce.co.uk>
 ;; Copyright © 2012 Daniel Dehennin <daniel.dehennin@baby-gnu.org>
+;; Copyright © 2013 Matt Renaud <mrenaud92@gmail.com>
 
 ;; Author: John Croisant <jacius@gmail.com>
 ;;         Joel C. Salomon <joelcsalomon@gmail.com>
 ;;         Alan Pearce <alan@alanpearce.co.uk>
 ;;         Daniel Dehennin <daniel.dehennin@baby-gnu.org>
+;;         Matt Renaud <mrenaud92@gmail.com>
 ;; URL: http://www.emacswiki.org/emacs/SmartTabs
 ;; Created: 19 Sep 2011
-;; Version: 0.2
+;; Version: 1.0
 ;; Keywords: languages
 
 ;; This file is not part of GNU Emacs.
@@ -108,8 +110,7 @@
 ;;      `smart-tabs-insinuate'.
 
 ;; This package is derived from <http://www.emacswiki.org/emacs/SmartTabs>
-;; as modified by John Croisant (jacius), along with Julien Fontanet and
-;; Tomita Hiroshi (tomykaira).
+;; with modifications by the various authors listed above.
 ;;
 ;; Modification history is at <https://github.com/jcsalomon/smarttabs>.
 
