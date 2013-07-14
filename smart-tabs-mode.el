@@ -90,7 +90,23 @@
 ;;  ;; Ruby
 ;;  (add-hook 'ruby-mode-hook 'smart-tabs-mode-enable)
 ;;  (smart-tabs-advice ruby-indent-line ruby-indent-level)
+
+;;; Adding Language Support
+
+;; Language support can be added through the use of the macro
+;; `smart-tabs-add-language-support'. Pass in the symbol you wish
+;; to use to identify the language, the mode hook, and a list
+;; of cons cells containing (indent-line-function . offset-variable).
+;; For example, if C++ mode was not provided by default it could be
+;; added as follows:
 ;;
+;; (smart-tabs-add-language-support c++ c++-mode-hook
+;;   ((c-indent-line . c-basic-offset)
+;;    (c-indent-region . c-basic-offset)))
+;;
+;; NOTE: All language support must be added before the call to
+;;      `smart-tabs-insinuate'.
+
 ;; This package is derived from <http://www.emacswiki.org/emacs/SmartTabs>
 ;; as modified by John Croisant (jacius), along with Julien Fontanet and
 ;; Tomita Hiroshi (tomykaira).
@@ -245,6 +261,17 @@ indent function and indent level.
                    (error (format "Unknown smart-tab-mode capable language '%s'" lang)))
                   (t (funcall (cdr lang-map))))))
         languages))
+
+
+;;;###autoload
+(defmacro smart-tabs-add-language-support (lang mode-hook advice-list &rest body)
+  "Add support for a language not already in the `smart-tabs-insinuate-alist'."
+  (declare (indent 2))
+  `(add-to-list
+    'smart-tabs-insinuate-alist
+    (smart-tabs-create-language-advice ,lang ,mode-hook
+      ,advice-list ,@body)))
+
 
 (defun smart-tabs-guess-insinuate (lang-param)
   "Enable smart-tabs-mode if language respect standard naming.
