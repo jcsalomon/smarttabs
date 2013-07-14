@@ -7,10 +7,10 @@
 ;; Copyright © 2013 Matt Renaud <mrenaud92@gmail.com>
 
 ;; Author: John Croisant <jacius@gmail.com>
-;;         Joel C. Salomon <joelcsalomon@gmail.com>
 ;;         Alan Pearce <alan@alanpearce.co.uk>
 ;;         Daniel Dehennin <daniel.dehennin@baby-gnu.org>
 ;;         Matt Renaud <mrenaud92@gmail.com>
+;; Maintainer: Joel C. Salomon <joelcsalomon@gmail.com>
 ;; URL: http://www.emacswiki.org/emacs/SmartTabs
 ;; Created: 19 Sep 2011
 ;; Version: 1.0
