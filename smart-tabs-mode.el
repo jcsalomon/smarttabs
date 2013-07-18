@@ -45,16 +45,32 @@
 
 ;;; Installation:
 
-;; To use, save smart-tabs-mode.el to a a directory on your load-path
-;; (e.g., ~/.emacs.d/elisp), then add the following to your .emacs file:
+;; The prefered method of installation of smart-tabs-mode is through
+;; the package available on MELPA.
+;;
+;;
+;; Manual Installation:
+;;
+;; Save smart-tabs-mode.el to a directory on your load-path and add the
+;; following to your configuration file:
+;;
 ;;
 ;;  (autoload 'smart-tabs-mode "smart-tabs-mode"
 ;;    "Intelligently indent with tabs, align with spaces!")
 ;;  (autoload 'smart-tabs-mode-enable "smart-tabs-mode")
 ;;  (autoload 'smart-tabs-advice "smart-tabs-mode")
+;;  (autoload 'smart-tabs-insinuate "smart-tabs-mode")
 ;;
-;; Then, for each language you want to use smart tabs, set up a hook
-;; and advice like so:
+
+;;; Enabling smart-tabs-mode for Languages:
+
+;; The prefered method of enabling smart-tabs-mode for languages is
+;; through the use of the smart-tabs-insinuate function as follows:
+;;
+;; (smart-tabs-insinuate 'c 'c++ 'java)
+;;
+;;
+;; Enabling Support for Languages Manually: (not recommended)
 ;;
 ;;  (add-hook 'MODE-HOOK 'smart-tabs-mode-enable)
 ;;  (smart-tabs-advice INDENT-FUNC TAB-WIDTH-VAR)
