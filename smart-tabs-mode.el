@@ -216,6 +216,9 @@ Smarttabs is enabled in mode hook.")
     (smart-tabs-mode/no-tabs-mode-advice align)
     (smart-tabs-mode/no-tabs-mode-advice align-regexp)
     (smart-tabs-mode/no-tabs-mode-advice indent-relative)
+    (smart-tabs-mode/no-tabs-mode-advice comment-dwim)
+    (smart-tabs-mode/no-tabs-mode-advice comment-box)
+    (smart-tabs-mode/no-tabs-mode-advice comment-indent)
 
     (unless
         (ad-find-advice 'indent-according-to-mode 'around 'smart-tabs)
