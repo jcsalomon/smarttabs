@@ -184,7 +184,8 @@ simplifies the creation of such a cons cell."
        ((cperl-indent-line . cperl-indent-level)))
 
     ,(smart-tabs-create-language-advice python python-mode-hook
-       ((python-indent-line-1 . python-indent))
+       ((python-indent-line . python-indent-offset)
+        (python-indent-region . python-indent-offset))
        (smart-tabs-when (featurep 'python-mode)
          ((py-indent-line . py-indent-offset)
           (py-newline-and-indent . py-indent-offset)
