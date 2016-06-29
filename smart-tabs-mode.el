@@ -213,6 +213,8 @@ Smarttabs is enabled in mode hook.")
 (define-minor-mode smart-tabs-mode
   "Intelligently indent with tabs, align with spaces!"
 
+  :init-value nil
+
   (progn
     (smart-tabs-mode/no-tabs-mode-advice align)
     (smart-tabs-mode/no-tabs-mode-advice align-regexp)
