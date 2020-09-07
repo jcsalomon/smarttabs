@@ -1,3 +1,6 @@
+[![MELPA](https://melpa.org/packages/smart-tabs-mode-badge.svg)](https://melpa.org/#/smart-tabs-mode)
+
+
 Smart Tabs
 ==========
 *Indent with tabs; align with spaces*
