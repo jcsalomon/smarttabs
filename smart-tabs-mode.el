@@ -246,14 +246,13 @@ Smarttabs is enabled in mode hook.")
   `(progn
      (defadvice ,function (around smart-tabs activate)
        (cond
-        (smart-tabs-mode
+        ((and smart-tabs-mode indent-tabs-mode (eq ,offset tab-width))
          (save-excursion
            (beginning-of-line)
            (while (looking-at "\t*\\( +\\)\t+")
              (replace-match "" nil nil nil 1)))
          (setq tab-width tab-width)
-         (let ((indent-tabs-mode t)
-               (tab-width fill-column)
+         (let ((tab-width fill-column)
                (,offset fill-column))
            (unwind-protect
                (progn ad-do-it))))
