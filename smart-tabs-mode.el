@@ -13,7 +13,7 @@
 ;; Maintainer: Joel C. Salomon <joelcsalomon@gmail.com>
 ;; URL: http://www.emacswiki.org/emacs/SmartTabs
 ;; Created: 19 Sep 2011
-;; Version: 1.0
+;; Version: 1.1
 ;; Keywords: languages
 
 ;; This file is not part of GNU Emacs.
